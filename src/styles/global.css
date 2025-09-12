@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* Volks-Typo Global Styles */
 
 /* Color Variables */
@@ -8,9 +10,18 @@
   --color-medium-gray: #888888;
   --color-dark-gray: #333333;
   --color-black: #000000;
-  
+
+  /* Color Theme Swatches in Hex */
+  --color-dark-green: #1C1F14; 
+  --color-dark-blue: #5693BF; 
+  --color-light-blue: #8EBFDD;
+  --color-light-green: #3E4C35; 
+  --color-light-green: #F6F5F1;
+
+
   /* Accent Color */
   --color-accent-red: #dc2626;
+  --color-accent-green: #3E4C35;
   
   /* Semantic Colors */
   --color-background: var(--color-white);
@@ -19,7 +30,7 @@
   --color-text-secondary: var(--color-dark-gray);
   --color-text-muted: var(--color-medium-gray);
   --color-border: var(--color-medium-gray);
-  --color-accent: var(--color-accent-red);
+  --color-accent: var(--color-accent-green);
   
   /* Typography */
   --font-heading-primary: 'Oswald', sans-serif;
@@ -43,7 +54,7 @@
   --color-text-secondary: #b8b8b8;
   --color-text-muted: #888888;
   --color-border: #333333;
-  --color-accent: #ff3333; /* Slightly brighter red for dark mode */
+  --color-accent: #8EBFDD; /* Slightly brighter red for dark mode */
 }
 
 /* Smooth theme transitions */
