@@ -1,15 +1,15 @@
 ---
-title: "Understanding Bauhaus: Form, Function, and the Modern Web"
-date: "2025-06-07"
-description: "A deep dive into how Bauhaus principles continue to shape contemporary digital design"
+title: "AI and the Modern Creative"
+date: "2025-09-15"
+description: "My take on the AI revolution and how it impacts creatives"
 excerpt: "From the workshops of Weimar to the screens of today, the Bauhaus movement's radical approach to design continues to influence how we think about digital spaces."
 categories: ["Design", "History", "Web Development"]
 tags: ["Bauhaus", "Design Theory", "Modernism", "UI Design"]
 ---
 
-# Understanding Bauhaus: Form, Function, and the Modern Web
+# You Are Here
 
-When Walter Gropius founded the Bauhaus school in Weimar, Germany in 1919, he couldn't have imagined that the principles developed in those workshops would continue to shape design more than a century later. Yet here we are, in the digital age, still grappling with the same fundamental questions that drove the Bauhaus movement: How do we balance form and function? What is the relationship between art and technology? How can design serve society?
+I've been trying to decide what I really feel about AI, and what it means going forward. Not just in the tech industry where I work, but at large. We're in the whirlwind of...
 
 ## The Revolutionary Simplicity of Bauhaus
 
