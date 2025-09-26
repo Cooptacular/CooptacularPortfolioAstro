@@ -1,7 +1,7 @@
 ---
-title: "Understanding Bauhaus: Form, Function, and the Modern Web"
-date: "2025-06-07"
-description: "A deep dive into how Bauhaus principles continue to shape contemporary digital design"
+title: "AI and the Modern Creative"
+date: "2025-09-15"
+description: "My take on the AI revolution and how it impacts creatives"
 excerpt: "From the workshops of Weimar to the screens of today, the Bauhaus movement's radical approach to design continues to influence how we think about digital spaces."
 categories: ["Design", "History", "Web Development"]
 tags: ["Bauhaus", "Design Theory", "Modernism", "UI Design"]
