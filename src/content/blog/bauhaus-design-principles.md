@@ -7,9 +7,9 @@ categories: ["Design", "History", "Web Development"]
 tags: ["Bauhaus", "Design Theory", "Modernism", "UI Design"]
 ---
 
-# Understanding Bauhaus: Form, Function, and the Modern Web
+# You Are Here
 
-When Walter Gropius founded the Bauhaus school in Weimar, Germany in 1919, he couldn't have imagined that the principles developed in those workshops would continue to shape design more than a century later. Yet here we are, in the digital age, still grappling with the same fundamental questions that drove the Bauhaus movement: How do we balance form and function? What is the relationship between art and technology? How can design serve society?
+I've been trying to decide what I really feel about AI, and what it means going forward. Not just in the tech industry where I work, but at large. We're in the whirlwind of...
 
 ## The Revolutionary Simplicity of Bauhaus
 

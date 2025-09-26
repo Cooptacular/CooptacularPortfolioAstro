@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
+//import srcImage from "../assets/";
 import Layout from '../components/Layout.astro';
+import "../styles/global.css";
 const base = import.meta.env.BASE_URL;
 
 ---
-
 <Layout title="Image Gallery" description="Photography by Bryan Cooper" showSidebar={false}>
   <div class="blog-page">
     <header class="blog-header">
@@ -14,9 +16,56 @@ const base = import.meta.env.BASE_URL;
       <hr class="blog-rule" />
     </header>
     
+    <!-- Image Gallery -->
+    <div class="gallery">
+      
+      <Image src={`${base}gallery/P1078082.jpg`} class="gallery-item" alt="bird" width={800} height={600} />
+      <img src={`${base}gallery/P1078107.jpg`} alt="Image 3" class="gallery-item" />
+      <img src={`${base}gallery/image5.jpg`} alt="Image 5" class="gallery-item" />
+      <img src={`${base}gallery/image6.jpg`} alt="Image 6" class="gallery-item" />
+    </div>
+
+    <!-- testing image import -->
     
+    <div id="lightbox" class="lightbox hidden">
+      <span class="close">&times;</span>
+      <img class="lightbox-content" />
+    </div>
+  </div>
+
+  <!-- lightbox script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxContent = document.querySelector('.lightbox-content') as HTMLImageElement | null;
+      const closeBtn = document.querySelector('.close');
   
-  </Layout>
+      galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+          if (lightboxContent) {
+            lightboxContent.src = (item as HTMLImageElement).src;
+            lightbox?.classList.remove('hidden');
+          }
+        });
+      });
+  
+      closeBtn?.addEventListener('click', () => {
+        if (lightbox) {
+          lightbox.classList.add('hidden');
+        }
+      });
+  
+      lightbox?.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</Layout>
+
+
 
 <style>
   .blog-page {
@@ -200,5 +249,64 @@ const base = import.meta.env.BASE_URL;
       flex-direction: column;
       align-items: flex-start;
     }
+  }
+
+  /* Gallery Styles */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .gallery-item {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .lightbox.hidden {
+    display: none;
+  }
+
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+  }
+
+  .close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
   }
 </style>
