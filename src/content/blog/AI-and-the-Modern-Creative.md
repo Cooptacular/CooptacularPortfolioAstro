@@ -1,15 +1,15 @@
 ---
 title: "AI and the Modern Creative"
 date: "2025-09-15"
-description: "My take on the AI revolution and how it impacts creatives"
+description: "Superpowerm or the easy way out?"
 excerpt: "From the workshops of Weimar to the screens of today, the Bauhaus movement's radical approach to design continues to influence how we think about digital spaces."
-categories: ["Design", "History", "Web Development"]
+categories: ["Design", "AI", "Creativity"]
 tags: ["Bauhaus", "Design Theory", "Modernism", "UI Design"]
 ---
 
 # You Are Here
 
-I've been trying to decide what I really feel about AI, and what it means going forward. Not just in the tech industry where I work, but at large. We're in the whirlwind of...
+ Here you stand at the Gates of Delerium. trying to decide what I really feel about AI, and what it means going forward. Not just in the tech industry where I work, but at large. We're in the whirlwind of...
 
 ## The Revolutionary Simplicity of Bauhaus
 

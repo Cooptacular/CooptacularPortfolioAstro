@@ -1,9 +1,24 @@
 ---
 import { Image } from 'astro:assets';
-//import srcImage from "../assets/";
 import Layout from '../components/Layout.astro';
 import "../styles/global.css";
 const base = import.meta.env.BASE_URL;
+
+// Glob-import all images in src/assets (page-relative). Using Vite's import.meta.glob with eager + as:'url'
+// This returns a Record<string,string> mapping file path -> final URL string.
+const imagesMap = import.meta.glob('../assets/*.{jpg,jpeg,png}', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
+// Convert to array and sort (alphabetic by filename) so gallery order is predictable.
+const images = Object.values(imagesMap).sort((a, b) => {
+  const an = a.split('/').pop() || a;
+  const bn = b.split('/').pop() || b;
+  return an.localeCompare(bn, undefined, { numeric: true, sensitivity: 'base' });
+});
+
+/** Helper: create a readable alt text from filename */
+function filenameToAlt(url: string) {
+  const name = url.split('/').pop() || url;
+  return name.replace(/\.(jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
+}
 
 ---
 <Layout title="Image Gallery" description="Photography by Bryan Cooper" showSidebar={false}>
@@ -18,16 +33,15 @@ const base = import.meta.env.BASE_URL;
     
     <!-- Image Gallery -->
     <div class="gallery">
-      <!-- <Image src={`${base}gallery/P1088326.jpg`} class="gallery-item" alt="Heron hunting" width={800} height={600} /> -->
-      <Image src={`src/assets/gallery/P1088326.jpg`} class="gallery-item" alt="Heron hunting" width={800} height={600} />
-      <Image src={`src/assets/gallery/P1077450.jpg`} class="gallery-item" alt="The Goat" width={800} height={600} />
-      <Image src={`src/assets/gallery/P1077269.jpg`} class="gallery-item" alt="Cloud Colors" width={800} height={600} />
-      <Image src={`src/assets/gallery/P1077758.jpg`} class="gallery-item" alt="Coyote" width={800} height={600} />
-      <Image src={`src/assets/gallery/IMG_6223.jpg`} class="gallery-item" alt="Life and Death - Skull" width={800} height={600} />
-      <Image src={`src/assets/gallery/P1043817.jpg`} class="gallery-item" alt="Migration - Geese" width={800} height={600} />
-      <Image src={`src/assets/gallery/P1043814.jpg`} class="gallery-item" alt="Geese in Flight" width={800} height={600} />  
-      <Image src={`src/assets/gallery/IMG_4047.jpg`} class="gallery-item" alt="Test image" width={800} height={600} />  
-        
+      {images.map((src, i) => (
+        <Image
+          src={src}
+          class="gallery-item"
+          alt={filenameToAlt(src)}
+          width={800}
+          height={600}
+        />
+      ))}
     </div>
 
     <!-- testing image import -->
@@ -43,13 +57,29 @@ const base = import.meta.env.BASE_URL;
     document.addEventListener('DOMContentLoaded', () => {
       const galleryItems = document.querySelectorAll('.gallery-item');
       const lightbox = document.getElementById('lightbox');
-      const lightboxContent = document.querySelector('.lightbox-content') as HTMLImageElement | null;
+  const lightboxContent = document.querySelector('.lightbox-content');
       const closeBtn = document.querySelector('.close');
   
+  /**
+   * Safely get the src from an element that might be an <img> or contain one.
+   * @param {Element} el
+   * @returns {string}
+   */
+  /** @param {Element} el */
+  function getSrc(el: Element): string {
+        if (!el) return '';
+  if (el instanceof HTMLImageElement) return el.src;
+  const img = (el.querySelector && el.querySelector('img')) || null;
+  return img instanceof HTMLImageElement ? img.src : '';
+      }
+
       galleryItems.forEach(item => {
         item.addEventListener('click', () => {
-          if (lightboxContent) {
-            lightboxContent.src = (item as HTMLImageElement).src;
+          const src = getSrc(item);
+          if (!src) return;
+          const lightboxImg = lightbox && lightbox.querySelector('.lightbox-content');
+          if (lightboxImg instanceof HTMLImageElement) {
+            lightboxImg.src = src;
             lightbox?.classList.remove('hidden');
           }
         });
