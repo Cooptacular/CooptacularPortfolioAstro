@@ -2,8 +2,12 @@
 import { Image } from 'astro:assets';
 import Layout from '../components/Layout.astro';
 import "../styles/global.css";
-const base = import.meta.env.BASE_URL;
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
+const base = import.meta.env.BASE_URL;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/gallery/*.{jpg,jpeg,png,webp}",
+);
 ---
 <Layout title="Image Gallery" description="Photography by Bryan Cooper" showSidebar={false}>
   <div class="blog-page">
@@ -15,7 +19,32 @@ const base = import.meta.env.BASE_URL;
       <hr class="blog-rule" />
     </header>
     
-    <!-- Image Gallery -->
+<!-- attempting to add fancybox gallery -->
+    <section class="justified-gallery" id="photoswipe">
+    {
+      Object.entries(images).map(async ([_path, image], index) => {
+        const { default: imageData } = await image();
+        return (
+          <a
+            style={`--width: ${imageData.width}; --height: ${imageData.height};`}
+            href={imageData.src}
+            target="_blank"
+            data-fancybox="gallery"
+          >
+            <Image
+              format="webp"
+              src={imageData}
+              alt=""
+              height={400}
+              loading={index < 20 ? "eager" : "lazy"}
+            />
+          </a>
+        );
+      })
+    }
+  </section>
+
+    <!-- Image Gallery 
     <div class="gallery">
       <Image src={`src/assets/gallery/P1088326.jpg`} class="gallery-item" alt="Heron hunting" width={800} height={600} />
       <Image src={`src/assets/gallery/P1077450.jpg`} class="gallery-item" alt="The Goat" width={800} height={600} />
@@ -25,7 +54,7 @@ const base = import.meta.env.BASE_URL;
       <Image src={`src/assets/gallery/P1043817.jpg`} class="gallery-item" alt="Migration - Geese" width={800} height={600} />
       <Image src={`src/assets/gallery/P1043814.jpg`} class="gallery-item" alt="Geese in Flight" width={800} height={600} />  
       <Image src={`src/assets/gallery/IMG_4047.jpg`} class="gallery-item" alt="Test image" width={800} height={600} />  
-    </div>
+    </div> -->
 
     <!-- testing image import -->
     
@@ -35,7 +64,7 @@ const base = import.meta.env.BASE_URL;
     </div>
   </div>
 
-  <!-- lightbox script -->
+  <!-- lightbox script 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const galleryItems = document.querySelectorAll('.gallery-item');
@@ -64,12 +93,83 @@ const base = import.meta.env.BASE_URL;
         }
       });
     });
-  </script>
+  </script> -->
+
+  <script>
+  import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
+
+  Fancybox.bind("[data-fancybox]", {
+    theme: "auto",
+    mainStyle: {
+      "--f-button-width": "44px",
+      "--f-button-height": "44px",
+      "--f-button-border-radius": "50%",
+      "--f-toolbar-padding": "16px",
+    },
+    Carousel: {
+      Arrows: false,
+      Toolbar: {
+        display: {
+          left: [],
+          middle: [],
+          right: ["close"],
+        },
+      },
+      transition: "slide",
+    },
+  });
+</script>
 </Layout>
 
 
 
 <style>
+  .justified-gallery {
+    --padding: max(2.5vw, 12px);
+    --space: max(2.5vw, 12px);
+    --min-height: clamp(200px, 20vw, 400px);
+
+    padding: var(--padding);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space);
+
+    a {
+      flex-grow: calc(var(--width) * (100000 / var(--height)));
+      flex-basis: calc(var(--min-height) * (var(--width) / var(--height)));
+      aspect-ratio: var(--width) / var(--height);
+      overflow: hidden;
+      opacity: 1;
+      transition: all 0.05s ease-in-out;
+    }
+
+    a img {
+      display: block;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--outline);
+      outline-offset: 2px;
+      transform: scale(1.05);
+      z-index: 1;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    a.hidden {
+      transition: opacity 0.4s ease-in-out;
+      opacity: 0;
+    }
+
+    &::after {
+      content: " ";
+      flex-grow: 1000000000;
+    }
+  }
+  
   .blog-page {
     max-width: 800px;
     margin: 0 auto;
