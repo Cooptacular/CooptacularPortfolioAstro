@@ -5,20 +5,17 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   // The site property should be your final deployed URL
-  site: 'https://cooptacular.github.io',
-  base: undefined,
+  site: process.env.SITE || 'https://cooptacular.github.io',
   // Only use base path for GitHub Pages deployments
   // For Netlify/Vercel, leave this undefined (no base path)
-
- integrations: [mdx()],
-
+  base: process.env.BASE_PATH || '/CooptacularPortfolioAstro',
+  integrations: [mdx()],
   markdown: {
     shikiConfig: {
       theme: 'github-dark',
       wrap: true,
     },
   },
-
   //adapter: netlify({
   //  imageCDN: false,
   // }),
